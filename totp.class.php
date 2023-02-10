@@ -2,7 +2,6 @@
 
 class TOTP
 {
-
     function checkSecretKey()
     {
         return isset($_GET['secretkey']);
@@ -54,20 +53,9 @@ class TOTP
         $counter = floor((time() - $start_time) / $time_step);
         return $this->hotp($secret, $counter, $length);
     }
-    function reloadOnTime() {
-        $secondsLeft = abs(time() % 30 - 30);
+    
+    function reloadOnTime($modulo = 30, $time_step = 30) {
+        $secondsLeft = abs(time() % $modulo - $time_step);
         header("Refresh:" . $secondsLeft);
-        echo '<script>
-            timeLeft = ' . $secondsLeft . ';
-        
-            function countdown() {
-                timeLeft--;
-                document.getElementById("seconds").innerHTML = String( timeLeft );
-                if (timeLeft > 0) {
-                    setTimeout(countdown, 1000);
-                }
-            }
-            setTimeout(countdown, 1000);</script>
-                <span id="seconds">' . $secondsLeft . '</span>';
     }
 }

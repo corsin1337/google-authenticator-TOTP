@@ -2,11 +2,6 @@
 
 class TOTP
 {
-    function checkSecretKey()
-    {
-        return isset($_GET['secretkey']);
-    }
-
     function base32_decode($base32)
     {
         $base32_chars = array(

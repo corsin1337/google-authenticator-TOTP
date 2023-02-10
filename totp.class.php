@@ -56,7 +56,7 @@ class TOTP
     
     function reloadOnTime($time_step = 30)
     {
-        $secondsLeft = abs(time() % $time_step - $time_step);
-        header("Refresh:" . $secondsLeft);
+        $timer = abs(time() % $time_step - $time_step);
+        header("Refresh:" . $timer);
     }
 }

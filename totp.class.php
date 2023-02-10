@@ -54,8 +54,9 @@ class TOTP
         return $this->hotp($secret, $counter, $length);
     }
     
-    function reloadOnTime($modulo = 30, $time_step = 30) {
-        $secondsLeft = abs(time() % $modulo - $time_step);
+    function reloadOnTime($time_step = 30)
+    {
+        $secondsLeft = abs(time() % $time_step - $time_step);
         header("Refresh:" . $secondsLeft);
     }
 }

@@ -46,7 +46,25 @@ function totp($secret, $time_step = 30, $start_time = 0, $length = 6): string {
     return hotp($secret, $counter, $length);
 }
 
+function reloadOnTime() {
+    $secondsLeft = abs(time() % 30 - 30);
+    header("Refresh:" . $secondsLeft);
+    echo '<script>
+    timeLeft = ' . $secondsLeft . ';
+
+    function countdown() {
+        timeLeft--;
+        document.getElementById("seconds").innerHTML = String( timeLeft );
+        if (timeLeft > 0) {
+            setTimeout(countdown, 1000);
+        }
+    }
+    setTimeout(countdown, 1000);</script>
+        <span id="seconds">' . $secondsLeft . '</span>';
+}
+
 if(checkSecretKey()) {
     $secret = $_GET['secretkey'];
     echo "TOTP token: " . totp($secret) . "\n";
 }
+reloadOnTime();

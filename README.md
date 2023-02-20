@@ -8,7 +8,7 @@ To get a local copy up and running follow these simple example steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/corsin1337/google-authenticator-TOTP-gen.git
+   git clone https://github.com/corsin1337/google-authenticator-TOTP.git
    ```
 2. Require the library once in your code
    ```sh

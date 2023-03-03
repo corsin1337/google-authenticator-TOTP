@@ -1,4 +1,7 @@
 <!-- GETTING STARTED -->
+## Requirements
+![PHP Version](https://img.shields.io/badge/PHP->=8.0-blue.svg)
+
 ## Getting Started
 
 This is an example of how you may give instructions on setting up your project locally.
@@ -23,7 +26,8 @@ To get a local copy up and running follow these simple example steps.
 Call the function in your code
    ```sh
     $totp = new TOTP($secret);
-    echo $result = $totp->totp($secret);
+    $result = $totp->totp($secret); //generates a TOTP-password, make sure the variable $secret is set
+    $timeLeft = $totp->timeLeft(); //calculates the number of seconds left until the next TOTP interval
    ```
 
 <!-- CONTRIBUTING -->

@@ -2,7 +2,7 @@
 
 class TOTP
 {
-    private static $BASE32_CHARS = array(
+    private static array $BASE32_CHARS = array(
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
         'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
         'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -52,9 +52,10 @@ class TOTP
         return $this->hotp($secret, $counter, $length);
     }
 
-    public function reloadOnTime($time_step = 30)
+    public function timeLeft($time_step = 30)
     {
-        $timer = abs(time() % $time_step - $time_step);
-        header("Refresh:" . $timer);
+        $now = new DateTimeImmutable();
+        $next_interval = (int) ceil($now->getTimestamp() / $time_step) * $time_step;
+        return $next_interval - $now->getTimestamp();
     }
 }

@@ -26,9 +26,10 @@ To get a local copy up and running follow these simple example steps.
 Call the function in your code
    ```sh
     $totp = new TOTP($secret);
-    $result = $totp->totp($secret); //generates a TOTP-password, make sure the variable $secret is set
-    $timeLeft = $totp->timeLeft(); //calculates the number of seconds left until the next TOTP interval
+    $result = $totp->totp($secret);
+    $timeLeft = $totp->timeLeft();
    ```
+
 
 <!-- CONTRIBUTING -->
 ## Contributing

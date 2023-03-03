@@ -2,7 +2,7 @@
 
 class TOTP
 {
-    const BASE32_CHARS = array(
+    private static $BASE32_CHARS = array(
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
         'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
         'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -14,7 +14,10 @@ class TOTP
         $bits = "";
         for ($i = 0; $i < strlen($base32); $i++) {
             $char = strtoupper($base32[$i]);
-            $idx = array_search($char, self::BASE32_CHARS);
+            if (!in_array($char, self::$BASE32_CHARS)) {
+                throw new Exception('Invalid base32 string');
+            }
+            $idx = array_search($char, self::$BASE32_CHARS);
             $bits .= sprintf('%05b', $idx);
         }
         $bytes = array();
@@ -42,7 +45,6 @@ class TOTP
         $modulo = pow(10, $length);
         return str_pad($value % $modulo, $length, "0", STR_PAD_LEFT);
     }
-
 
     public function totp($secret, $time_step = 30, $start_time = 0, $length = 6)
     {

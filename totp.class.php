@@ -14,9 +14,6 @@ class TOTP
         $bits = "";
         for ($i = 0; $i < strlen($base32); $i++) {
             $char = strtoupper($base32[$i]);
-            if (!in_array($char, self::$BASE32_CHARS)) {
-                throw new Exception('Invalid base32 string');
-            }
             $idx = array_search($char, self::$BASE32_CHARS);
             $bits .= sprintf('%05b', $idx);
         }
@@ -48,14 +45,13 @@ class TOTP
 
     public function totp($secret, $time_step = 30, $start_time = 0, $length = 6)
     {
-        $counter = floor((time() - $start_time) / $time_step);
+        $counter = intdiv((time() - $start_time), $time_step);
         return $this->hotp($secret, $counter, $length);
     }
 
     public function timeLeft($time_step = 30)
     {
-        $now = new DateTimeImmutable();
-        $next_interval = (int) ceil($now->getTimestamp() / $time_step) * $time_step;
-        return $next_interval - $now->getTimestamp();
+        $next_interval = ceil(time() / $time_step) * $time_step;
+        return $next_interval - time();
     }
 }
